@@ -1,0 +1,37 @@
+{% load staticfiles %}
+<html>
+  <head>
+    <link rel="icon" type="image/ico" href="{% static '/static/favicon.ico' %}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" rel="stylesheet" href="{% static '/static/bootstrap/css/bootstrap.css' %}"  media="screen">
+    <link type="text/css" rel="stylesheet" href="{% static '/static/bootstrap/css/bootstrap.min.css' %}"  media="screen">
+    <!-- Bootstrap core CSS -->
+    <script type="text/javascript" src="{% static '/static/jquery.min.js'  %}"></script>
+    <!--<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">-->
+    
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="{% static '/static/bootstrap/js/ie-emulation-modes-warning.js' %}"></script>
+    
+    <link rel="stylesheet" type="text/css" href="{% static '/static/select/css/bootstrap-select.css' %}">
+    
+    <script type="text/javascript" src="{% static '/static/moment.js'  %}"></script>
+    <script type="text/javascript" src="{% static '/static/bootstrap/js/bootstrap.js'  %}"></script>
+    <script type="text/javascript" src="{% static '/static/date_picker/js/bootstrap-datetimepicker.min.js'  %}"></script>
+    <link rel="stylesheet" href="{% static '/static/date_picker/css/bootstrap-datetimepicker.min.css'  %}">
+    {% block title %}
+    {% endblock %}
+  </head>
+
+  <body>
+    {% block content %}
+    {% endblock %}
+    <script src="{% static '/static/bootstrap/js/bootstrap.min.js'  %}"></script>
+    <script src="{% static '/static/bootstrap/js/docs.min.js'  %}"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{% static '/static/bootstrap/js/ie10-viewport-bug-workaround.js'  %}"></script>
+  </body>
+</html>

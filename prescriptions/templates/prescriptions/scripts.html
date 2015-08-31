@@ -1,0 +1,66 @@
+{% extends "dashboard/dashboard.html" %}
+{% block page %}
+<div class="row page-header">
+    <div class="col-md-3">
+        <h1 style="margin-top: 0px;">Prescriptions</h1>
+    </div>
+    <div class="col-md-3" style="float: right;">
+		{% if type = 'Doctor' %}
+			<a href="add/" style="float: right;" class="btn btn-danger">Add</a>
+		{% endif %}
+    </div>
+</div>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+			<th>Name</th>
+			<th>Notes</th>
+            {% if type = 'Patient' %}
+                <th>Doctor</th>
+            {% endif %}
+            {% if type = 'Doctor' %}
+                <th>Patient</th>
+            {% endif %}
+            {% if type = 'Nurse' %}
+                <th>Patient</th>
+                <th>Doctor</th>
+            {% endif %}
+            <th>Expiration Date</th>
+            <th>Hospital</th>
+            <th></th>
+        </tr>
+    </thead>
+	{% for rx in prescriptions %}
+            <tr style="cursor: pointer;">
+                <td>{{rx.id}}</td>
+				<td>{{rx.name}}</td>
+				<td>{{rx.notes}}</td>
+                {% if type = 'Patient' %}
+                    <td><a href="{% url 'user' rx.doctor.user %}">{{rx.doctor}}</a></td>
+                {% elif type = 'Doctor' %}
+                    <td><a href="{% url 'user' rx.patient.user %}">{{rx.patient}}</a></td>
+                {% elif type = 'Nurse' %}
+                    <td><a href="{% url 'user' rx.patient.user %}">{{rx.patient}}</td>
+                    <td><a href="{% url 'user' rx.doctor.user %}">{{rx.doctor}}</a></td>
+                {% else %}
+                    <td><a href="{% url 'user' rx.patient.user %}">{{rx.patient}}</td>
+                    <td><a href="{% url 'user' rx.doctor.user %}">{{rx.doctor}}</a></td>
+                {% endif %}
+				<td>{{rx.date}}</td>
+				<td>{{rx.hospital}}</td>
+                <td>
+                    {% if type = 'Doctor' %}
+                        <a title = "View Patient" href="{% url 'user' rx.patient.user%}" class="btn btn-success"><span class="glyphicon glyphicon-user"></a>
+                    {% elif type = 'Patient' %}
+                        <a title = "View Patient" href="{% url 'user' rx.doctor.user%}" class="btn btn-success"><span class="glyphicon glyphicon-user"></a>
+                    {% endif %}
+                    <a title = "View Hospital" href="{% url 'hospitals' rx.hospital %}" class="btn btn-warning"><span class="glyphicon glyphicon-header"></a>
+                    {% if type = 'Doctor' %}
+                        <a title = "Delete Prescriptions" href="{% url 'rx_delete' rx.id %}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></a>
+                    {% endif %}
+                </td>
+			</r>
+    {% endfor %}
+</table>
+{% endblock %}

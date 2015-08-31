@@ -1,0 +1,63 @@
+{% extends "dashboard/dashboard.html" %}
+{% block page %}
+<h1 class="page-header">Edit Patient Medical Information</h1>
+{% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ error }}
+            </div>
+    {% endfor %}
+{% endif %}
+{% for field in form %}
+        {% if field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ field.label_tag }}</strong> {{ field.errors }}
+            </div>
+        {% endif %}
+{% endfor %}
+<form action="" method="post">{% csrf_token %}
+    <div class="row">
+        <div class="row">
+            <div class="col-md-2" style="display: -webkit-box;">
+                <p style="margin-top: .5em; margin-right: 5px;">Gender</p>
+                {{form.sex}}
+            </div>
+        </div>
+        &nbsp;
+        <div class="row">
+            <div class="col-md-2" style="display: -webkit-box;">
+                <div style="display: -webkit-box;">
+                    <p style="margin-top: .5em; margin-right: 10px;">Height </p>
+                    &nbsp;
+                    <input type="number" name="height_ft" class="form-control" placeholder="ft" value="{{patient.height_ft}}"min="0" autofocus="" style="width: 50px;">'
+                    &nbsp;
+                    <input type="number" name="height_in" class="form-control" placeholder="in" value="{{patient.height_in}}" min="0" max="12" autofocus="" style="width: 50px;">"
+                </div>
+                <div style="display: -webkit-box; margin-left: 20px;">
+                    <input type="number" name="weight" class="form-control" placeholder="Weight" value="{{patient.weight}}" min="0" autofocus="" style="width: 90px;">
+                    &nbsp;
+                    <p style="margin-top: .5em;">lbs</p>
+                </div>
+            </div>
+        </div>
+        &nbsp;
+        <div class="row">
+            <div class="col-md-4">
+                <label for="med_info" class="sr-only">Other Information</label>
+                <input type="text" name="med_info" class="form-control" placeholder="Other Information" value="{{patient.med_info}}" size="60" autofocus="">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6" style="margin-top:20px;">
+        <div class="btn-group btn-group-lg" role="group" style= "float: right;">
+            <button class="btn btn-danger" type="submit">Save</button>
+            <button onclick="goBack()" class="btn btn-danger">Cancel</button>
+        </div>
+    </div>
+</form>
+<script>
+function goBack() {
+    window.history.back()
+}
+</script>
+{% endblock %}

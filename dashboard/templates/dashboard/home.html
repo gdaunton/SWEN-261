@@ -1,0 +1,115 @@
+{% extends "dashboard/dashboard.html" %}
+{% block page %}
+<div class="row page-header" style="padding-bottom: 0px;">
+    <div class="col-md-3">
+        {% if user.first_name %}
+            <h1>Welcome {{user.first_name}}!</h1>
+        {% else %}
+            <h1>Welcome {{user.username}}!</h1>
+        {% endif %}
+    </div>
+    <div class="col-md-6" style="padding-top:25px;">
+        <p>
+			{% if appt|length != 0 %}
+				<a href="/appt/" class="btn btn-danger">Appointments <span class="badge">{{ appt|length }}</span></a>
+			{% endif %}
+           	{% if new_mess != 0 %}
+                <a href="/messages/" class="btn btn-danger">Messages <span class="badge">{{new_mess}}</span></a>
+            {% endif %}
+			{% if tests %}
+				<a href="#" class="btn btn-danger">Tests <span class="badge">0</span></a>
+			{% endif %}
+        </p>
+    </div>  
+</div>
+<div class="row">
+	{% if type = "Doctor" %}
+		<div class="col-md-6">
+			<div class="panel panel-danger" style="max-height: 50%;">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-md-1"><h5>Patients</h5></div>
+					</div>
+				</div>
+				<div style="max-height: 34%; overflow-y: scroll;">
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Patient</th>
+								<th>First Name</th>
+								<th>Last Name</th>
+								<th>Hospital</th>
+								<th></th>
+							</tr>
+						</thead>
+						{% for patient in patient_list %}
+							<tr data-href="{% url 'user' patient.user %}" style="cursor: pointer;">
+								<td><a href="{% url 'user' patient.user %}">{{patient}}</a></td>
+								<td>{{patient.user.first_name}}</td>
+								<td>{{patient.user.last_name}}</td>
+								<td>{{patient.hospital}}</td>
+								<td>
+									<a title = "Compose Message" href="{% url 'compose' patient.user %}" class="btn btn-success"><span class="glyphicon glyphicon-envelope"></a>
+									<a title = "Make Appointment" href="{% url 'pat_appt' patient.user %}" class="btn btn-info"><span class="glyphicon glyphicon-calendar"></a>
+									<a title = "View Profile" href="{% url 'user' patient.user %}" class="btn btn-warning"><span class="glyphicon glyphicon-eye-open"></a>
+								</td>
+							</tr>
+						{% endfor %}
+					</table>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+	{% if type != "Nurse" and appt|length != 0 %}
+		<div class="col-md-6">
+			<div class="panel panel-danger" style="max-height: 50%;">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-md-1"><h5>Upcoming Appointments</h5></div>
+					</div>
+				</div>
+				<div style="max-height: 34%; overflow-y: scroll;">
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Date</th>
+								{% if type = "Patient" %}
+									<th>Doctor</th>
+								{% else %}
+									<th>Patient</th>
+								{% endif %}
+								<th>Location</th>
+								<th></th>
+							</tr>
+						</thead>
+						{% for appt in appt %}
+								<tr data-href="{% url 'appt' appt.id %}" style="cursor: pointer;">
+									<td>{{appt.date}}</a></td>
+									{% if type = "Patient" %}
+										<td>{{appt.doctor}}</td>
+									{% else %}
+										<td>{{appt.patient}}</td>
+									{% endif %}
+									<td>{{appt.hospital}}</td>
+									<td>
+										{% if type = 'Patient' %}
+											<a title="View Profile" href="{% url 'user' appt.doctor.user%}" class="btn btn-success"><span class="glyphicon glyphicon-user"></a>
+										{% elif type = 'Doctor' %}
+											<a title="View Profile" href="{% url 'user' appt.patient.user%}" class="btn btn-success"><span class="glyphicon glyphicon-user"></a>
+										{% endif %}
+										<a title = "Edit Appointment" href="{% url 'appt' appt.id %}" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></a>
+										<a title = "View Hospital" href="{% url 'hospitals' appt.hospital %}" class="btn btn-warning"><span class="glyphicon glyphicon-header"></a>
+										<a title = "Cancel Appointment" href="{% url 'appt_cancel' appt.id %}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></a>
+									</td>
+								</tr>
+						{% endfor %}
+					</table>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+</div>
+{% endblock %}
+<div class="col-md-3" style="float: right;">
+        <a href="#" style="width: 60%; margin: 20px 0px 10px; float: center; line-height: normal;" class="btn btn-lg btn-danger btn-block">Shortcut to something</a>
+    </div>

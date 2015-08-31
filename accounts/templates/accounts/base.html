@@ -1,0 +1,27 @@
+{% load staticfiles %}
+<html>
+  <head>
+    <link rel="icon" type="image/ico" href="{% static '/static/favicon.ico' %}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" rel="stylesheet" href="{% static '/static/bootstrap/css/bootstrap.css' %}"  media="screen">
+    <!-- Bootstrap core CSS -->
+    <script type="text/javascript" src="{% static '/static/jquery.min.js'  %}"></script>
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static '/static/select/css/bootstrap-select.css' %}">
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="{% static '/static/bootstrap/js/ie-emulation-modes-warning.js' %}"></script>
+    {% block title %}
+    {% endblock %}
+  </head>
+
+  <body>
+    {% block content %}
+    {% endblock %}
+
+    <script src="{% static '/static/bootstrap/js/bootstrap.min.js' %}"></script>
+  </body>
+</html>

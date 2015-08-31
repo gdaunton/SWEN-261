@@ -1,0 +1,61 @@
+{% extends "dashboard/dashboard.html" %}
+{% block page %}
+<div class="row page-header">
+    <div class="col-md-3">
+        <h1 style="margin-top: 0px;">Appointments</h1>
+    </div>
+    <div class="col-md-3" style="float: right;">
+        <a href="add/" style="float: right;" class="btn btn-danger">Add</a>
+    </div>
+</div>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            {% if type = 'Patient' %}
+                <th>Doctor</th>
+            {% endif %}
+            {% if type = 'Doctor' %}
+                <th>Patient</th>
+            {% endif %}
+            {% if type = 'Nurse' %}
+                <th>Patient</th>
+                <th>Doctor</th>
+            {% endif %}
+            <th>Date</th>
+            <th>Hospital</th>
+            <th></th>
+        </tr>
+    </thead>
+	{% for appt in appointments %}
+            <tr data-href="{% url 'appt' appt.id %}" style="cursor: pointer;">
+                <td>{{appt.id}}</td>
+                {% if type = 'Patient' %}
+                    <td>{{appt.doctor}}</td>
+                {% elif type = 'Doctor' %}
+                    <td>{{appt.patient}}</td>
+                {% elif type = 'Nurse' %}
+                    <td><a href="{% url 'user' appt.patient.user %}">{{appt.patient}}</td>
+                    <td><a href="{% url 'user' appt.doctor.user %}">{{appt.doctor}}</a></td>
+                {% else %}
+                    <td><a href="{% url 'user' appt.patient.user %}">{{appt.patient}}</td>
+                    <td><a href="{% url 'user' appt.doctor.user %}">{{appt.doctor}}</a></td>
+                {% endif %}
+				<td>{{appt.date}}</td>
+				<td>{{appt.hospital}}</td>
+                <td>
+                    {% if type = 'Patient' %}
+                        <a title = "View Profile" href="{% url 'user' appt.doctor.user%}" class="btn btn-success"><span class="glyphicon glyphicon-user"></a>
+                    {% elif type = 'Doctor' %}
+                        <a title = "View Profile" href="{% url 'user' appt.patient.user%}" class="btn btn-success"><span class="glyphicon glyphicon-user"></a>
+                    {% endif %}
+                    <a title = "View Appointment" href="{% url 'appt' appt.id %}" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></a>
+                    <a title = "View Hospital" href="{% url 'hospitals' appt.hospital %}" class="btn btn-warning"><span class="glyphicon glyphicon-header"></a>
+                    {% if type != 'Nurse' %}
+                        <a title = "Cancel appointment" href="{% url 'appt_cancel' appt.id %}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></a>
+                    {% endif %}
+                </td>
+			</tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "dashboard/dashboard.html" %}
+{% block page %}
+<div class="row page-header">
+	<div style="display: flex;">
+		<div>
+	    	<h1>{{message.subject}}</h1>
+	   		<h6 style="color: #A1A1A1;">TO: {{message.recipient}} &nbsp;&nbsp; FROM: {{message.sender}}</h6>
+	   		<h6 style="color: #A1A1A1;">{{message.date}}</h6>
+	   </div>
+	   	<div style="margin-top: 3em; margin-left: auto; margin-right: 10px;">
+			<a href="{% url 'reply' message.id %}" style="float: right;" class="btn btn-danger">Reply</a>
+	    </div>
+	</div>
+</div>
+<h4>{{message.text}}</h4>
+{% endblock %}

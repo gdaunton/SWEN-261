@@ -1,0 +1,50 @@
+{% extends "dashboard/dashboard.html" %}
+{% block page %}
+<div class="row page-header">
+    <div class="col-md-3">
+        <h1 style="margin-top: 0px;">New Message</h1>
+    </div>
+</div>
+<form action="" method="post">{% csrf_token %}
+<div class="row">
+	<div class="col-md-2">
+		<h5>From:</h5>
+		<select class="selectpicker form-control" disabled>
+			<option>{{user}}</option>
+		</select>
+	</div>
+	<div class="col-md-2">
+		<h5>To:</h5>
+		{{form.receiver}}
+	</div>
+</div>
+&nbsp;
+<div class="row">
+	<div class="col-md-5">
+		<label for="subject" class="sr-only">Subject</label>
+        <input id="subject" name="subject" value="{{subject}}" class="form-control" placeholder="Subject" {% if subject == "" %}autofocus=""{% endif%}>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-5">
+		<h5>Message:</h5>
+		<label for="subject" class="sr-only">Message</label>
+        <textarea id="message" name="message" class="form-control" placeholder="Message" autofocus="" style="height: 10em;"></textarea>
+	</div>
+</div>
+<div class="col-md-6" style="margin-top:20px;">
+    <div class="btn-group btn-group-lg" role="group" style= "float: right;">
+        <button class="btn btn-danger" type="submit">Send</button>
+		<button onclick="goBack()" class="btn btn-danger">Cancel</button>
+    </div>
+</div>
+</form>
+<script>
+function goBack() {
+    window.history.back()
+}
+</script>
+<script>
+	$('.selectpicker').selectpicker();
+</script>
+{% endblock %}

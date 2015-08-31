@@ -1,0 +1,34 @@
+{% extends "dashboard/dashboard.html" %}
+{% block page %}
+<div class="row page-header">
+	<div style="display: flex;">
+		<div>
+	    	<h1>{{test}}</h1>
+	   		<h6 style="color: #A1A1A1;">Doctor: {{test.doctor}} &nbsp;&nbsp; Patient: {{test.patient}}</h6>
+	   		<h6 style="color: #A1A1A1;">{{test.date}}</h6>
+	   </div>
+	</div>
+</div>
+{% if not test.released %}
+	<h3 style="color: #B80101; text-align:center;">UN-RELEASED</h3>
+{% endif %}
+{% if test.files %}
+	<h3>Attached File:</h3>
+	{% if test.has_image %}
+		<div style="margin-left:40px;">
+			<div class="row">
+				<a href={{test.files.url}}>{{test.filename}}</a>
+			</div>
+			&nbsp;
+			<div clas="row">
+				<img src={{test.files.url}} style="max-height: 300px;"></img>
+			</div>
+		</div>
+	{% else %}
+		<a href={{test.files.url}}>{{test.filename}}</a>
+	{% endif %}
+	&nbsp;
+{% endif %}
+<h3>Notes:</h3>
+<div style="margin-left:40px;">{{test.notes|linebreaks}}</div>
+{% endblock %}

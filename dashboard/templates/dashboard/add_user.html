@@ -1,0 +1,145 @@
+{% extends "dashboard/dashboard.html" %}
+{% block page %}
+<h1 class="page-header">Add {{u_type}}</h1>
+{% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ error }}
+            </div>
+    {% endfor %}
+{% endif %}
+{% for field in form %}
+        {% if field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ field.label_tag }}</strong> {{ field.errors }}
+            </div>
+        {% endif %}
+{% endfor %}
+<form action="" method="post">{% csrf_token %}
+<div class="row">
+    <div class="col-md-2">
+        <label for="username" class="sr-only">First Name</label>
+        <input id="username" name="username" class="form-control" placeholder="Username" autofocus="" required="">
+        &nbsp;
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <label for="first_name" class="sr-only">First Name</label>
+        <input id="first_name" name="first_name" class="form-control" placeholder="First Name" autofocus="" required="">
+    </div>
+    <div class="col-md-2">
+        <label for="last_name" class="sr-only">Last Name</label>
+        <input id="last_name" name="last_name" class="form-control" placeholder="Last Name" autofocus="" required="">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3" style="padding-top:25px;">
+            <label for="email" class="sr-only" >Email</label>
+            <input id="email" name="email" class="form-control" type="inputEmail" placeholder="Email" autofocus="" >
+            {% if u_type = 'Patient' %}
+                &nbsp;
+                <label for="address" class="sr-only">Address</label>
+                <input id="address" name="address" class="form-control" placeholder="Address" autofocus="" >
+                &nbsp;
+                {{ form.doctor }}
+				&nbsp;
+				<p>Admitted Hospital:</p>
+				{{ form.hospital }}
+            {% endif %}
+    </div>
+    <div class="col-md-3" style="padding-top:25px;">
+        {% if u_type != 'Admin' %}
+            <label for="phone" class="sr-only">Phone Number</label>
+            <input type="text" pattern="[0-9]{10}" name="phone" id="phone" class="form-control" placeholder="Phone Number" autofocus >
+        {% endif %}
+        {% if u_type = 'Patient' %}
+            &nbsp;
+            <label for="insurance" class="sr-only">Insurance ID</label>
+            <input type="text" pattern="[0-9]{0,10}" name="insurance" id="insurance" class="form-control" placeholder="Insurance ID" autofocus>
+        {% endif %}
+        &nbsp;
+        {% if u_type = "Doctor" %}
+            <p>Locations:</p>
+        {% endif %}
+		{% if u_type = "Patient" %}
+			{{ form.pref_hospital }}
+			&nbsp;
+			<p>Nurses:</p>
+            {{ form.nurse }}
+		{% elif u_type != 'Admin'  %}
+            {{ form.hospital }}
+		{% endif %}
+    </div>
+</div>
+&nbsp;
+<div class="row">
+    <div class="col-md-3">
+        <label for="password1" class="sr-only">Password</label>
+        <input type="password" name="password1" id="password1" class="form-control" placeholder="Password" required=""> 
+    </div>
+    <div class="col-md-3">
+        <label for="password2" class="sr-only">Repeat Password</label>
+        <input type="password" name="password2" id="password2" class="form-control" placeholder="Repeat Password" required="">
+    </div>
+</div>
+{% if u_type = 'Patient' %}
+	&nbsp;
+    <div class="row">
+        <h5>Emergency Contact</h5>
+        <div class="col-md-3">
+            <label for="ice_name" class="sr-only">First Name</label>
+            <input id="ice_name" name="ice_name" class="form-control" placeholder="Full Name" autofocus="">
+        </div>
+        <div class="col-md-3">
+            <label for="ice_phone" class="sr-only">Phone Number</label>
+            <input type="text" pattern="[0-9]{10}" name="ice_phone" id="ice_phone" class="form-control" placeholder="Phone Number" autofocus>
+        </div>
+    </div>
+	&nbsp;
+    <div class="row">
+        <h5>Medical Information</h5>
+        <div class="row">
+            <div class="col-md-2" style="display: -webkit-box;">
+                <p style="margin-top: .5em; margin-right: 5px;">Gender</p>
+                {{form.sex}}
+            </div>
+        </div>
+        &nbsp;
+        <div class="row">
+            <div class="col-md-2" style="display: -webkit-box;">
+                <div style="display: -webkit-box;">
+                    <p style="margin-top: .5em; margin-right: 10px;">Height </p>
+                    &nbsp;
+                    <input type="number" name="height_ft" class="form-control" placeholder="ft" min="0" autofocus="" style="width: 50px;">'
+                    &nbsp;
+                    <input type="number" name="height_in" class="form-control" placeholder="in" min="0" max="12" autofocus="" style="width: 50px;">"
+                </div>
+                <div style="display: -webkit-box; margin-left: 20px;">
+                    <input type="number" name="weight" class="form-control" placeholder="Weight" min="0" autofocus="" style="width: 90px;">
+                    &nbsp;
+                    <p style="margin-top: .5em;">lbs</p>
+                </div>
+            </div>
+        </div>
+        &nbsp;
+        <div class="row">
+            <div class="col-md-4">
+                <label for="med_info" class="sr-only">Other Information</label>
+                <input type="text" name="med_info" class="form-control" placeholder="Other Information" size="60" autofocus="">
+            </div>
+        </div>
+    </div>
+{% endif %}
+<div class="col-md-6" style="margin-top:20px;">
+    <div class="btn-group btn-group-lg" role="group" style= "float: right;">
+        <button class="btn btn-danger" type="submit">Save</button>
+        <button onclick="goBack()" class="btn btn-danger">Cancel</button>
+    </div>
+</div>
+<script>
+function goBack() {
+    window.history.back()
+}
+</script>
+{% endblock %}

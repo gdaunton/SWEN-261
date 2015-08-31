@@ -1,0 +1,121 @@
+{% extends "dashboard/dashboard.html" %}
+{% block page %}
+<div class="row page-header">
+    <div class="col-md-3">
+        <h1 style="margin-top: 0px;">{{hospital}}</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6" style="height: 50%;">
+        <div class="col-md-4">
+            <h4><strong>Location: </strong>{{hospital.location}}</h4>
+            &nbsp;
+            <ul style="list-style-type: none; padding-left: 0px;">
+    			{% if hours %}
+    				{% for hor in hours %}
+    					<li><h5><b>{{ hor.day }}:</b></h5></li>
+                        <li>{{ hor.start }} - {{ hor.close }}</li>
+                    {% endfor %}
+    			{% endif %}
+            </ul>
+        </div>
+    </div>
+	{% if doctors %}
+    <div class="col-md-6">
+			<div class="panel panel-danger" style="max-height: 50%;">
+            <div class="panel-heading">
+                <h5>Doctors</h5>
+            </div>
+            <div style="max-height: 34%; overflow-y: scroll;">
+                <table class="table table-striped table-hover" style="overflow-y: scroll;">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Doctor</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                        </tr>
+                    </thead>
+                    {% for user in doctors %}
+                            <tr data-href="{% url 'user' user.user %}" style="cursor: pointer;">
+                                <td>{{user.id}}</td>
+                                <td><a href="{% url 'user' user.user %}">{{user}}</a></td>
+                                <td>{{user.user.first_name}}</td>
+                                <td>{{user.user.last_name}}</td>
+                            </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+	{% endif %}
+</div>
+<div class="row">
+	{% if patients and type != "Patient" %}
+    <div class="col-md-6">
+        <div class="panel panel-danger" style="max-height: 50%;">
+            <div class="panel-heading">
+                <h5>Patients</h5>
+            </div>
+            <div style="max-height: 34%; overflow-y: scroll;">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Patient</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                        </tr>
+                    </thead>
+                    {% for patient in patients %}
+                            <tr data-href="{% url 'user' patient.user %}" style="cursor: pointer;">
+                                <td>{{patient.id}}</td>
+                                <td><a href="{% url 'user' patient.user %}">{{patient}}</a></td>
+                                <td>{{patient.user.first_name}}</td>
+                                <td>{{patient.user.last_name}}</td>
+                            </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+	{% endif %}
+	{% if nurses %}
+	<div class="col-md-6">
+        <div class="panel panel-danger" style="max-height: 50%;">
+            <div class="panel-heading">
+                <h5>Nurses</h5>
+            </div>
+            <div style="max-height: 34%; overflow-y: scroll;">
+                <table class="table table-striped table-hover" style="overflow-y: scroll;">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nurse</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                        </tr>
+                    </thead>
+                    {% for user in nurses %}
+                            <tr data-href="{% url 'user' user.user %}" style="cursor: pointer;">
+                                <td>{{user.id}}</td>
+                                <td><a href="{% url 'user' user.user %}">{{user}}</a></td>
+                                <td>{{user.user.first_name}}</td>
+                                <td>{{user.user.last_name}}</td>
+                            </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+	{% endif %}
+</div>
+<script>
+$(document).ready(function(){
+    $('table tr').click(function(){
+        window.location = $(this).data('href');
+        return false;
+    });
+});
+</script>
+{% endblock %}

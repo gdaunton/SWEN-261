@@ -1,0 +1,58 @@
+{% extends "dashboard/dashboard.html" %}
+{% block page %}
+<h1 class="page-header">New Appointment</h1>
+{% for field in form %}
+    {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.label_tag }}</strong> {{ error }}
+        </div>
+    {% endfor %}
+{% endfor %}
+{% for error in form.non_field_errors %}
+    <div class="alert alert-danger">
+        {{ error }}
+    </div>
+{% endfor %}
+<form action="" method="post">{% csrf_token %}
+    <div class="row">
+        <div class="col-md-2">
+           {{ form.hospital }}
+        </div>
+        {% if type != "Doctor" %}
+            <div class="col-md-2">
+                {{ form.doctor }}
+            </div>
+        {% endif %}
+        {% if type != "Patient" %}
+            <div class="col-md-2">
+                {{ form.patient }}
+            </div>
+        {% endif %}
+    </div>
+    &nbsp;
+    <div class="row">
+        <div class="col-md-3" >
+    		<div class="form-group">
+                <div class='input-group date' id='datetimepicker'>
+                    <input id='date' name='date' type='text' class="form-control" placeholder="Date" required/>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker').datetimepicker({
+                    stepping: 30
+                });
+            });
+        </script>
+    </div>
+    <div class="col-md-4" style="margin-top:20px;">
+        <div class="btn-group btn-group-lg" role="group" style= "float: right;">
+            <a href="/appt/" class="btn btn-danger">Cancel</a>
+            <button class="btn btn-danger" type="submit">Save</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends "accounts/base.html" %}
+{% load staticfiles %}
+{% block title %}
+ <title>Register|HealthNet</title>
+{% endblock %}
+{% block content %}
+<div class="container" style="width:30%;">
+    {% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ error }}
+            </div>
+    {% endfor %}
+    {% endif %}
+    {% for field in form %}
+        {% if field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ field.label_tag }}</strong> {{ field.errors }}
+            </div>
+        {% endif %}
+    {% endfor %}
+    <form action="" method="post">{% csrf_token %}
+		{% if next %}
+			<input type="hidden" name="next" value="{{ next }}" />
+		{% endif %}
+		<div class="row">
+    		<img style="height: 77px; margin-left: -250px; margin-bottom: -20px;" src="{% static '/static/healthnet.png' %}">
+            <h4 style="color: #b80101; margin-left: -90px; margin-bottom: -65px;">Register</h4>
+        </div>
+		<div class="row">
+            <div class="col-md-6">
+                <label for="username" class="sr-only">Username</label>
+                <input type="text" pattern="[A-Za-z0-9@.+-_]{0,30}" name="username" id="username" class="form-control" placeholder="Username" required autofocus>
+			</div>
+			<div class="col-md-6">
+                <label for="email" class="sr-only" >Email</label>
+                <input id="email" name="email" class="form-control" type="inputEmail" placeholder="Email" autofocus="">
+			</div>
+		</div>
+		<div class="row">
+            <div class="col-md-6">
+                <label for="first_name" class="sr-only">First Name</label>
+                <input id="first_name" name="first_name" class="form-control" placeholder="First Name" required autofocus="">
+			</div>
+			<div class="col-md-6">
+                <label for="last_name" class="sr-only">Last Name</label>
+                <input id="last_name" name="last_name" class="form-control" placeholder="Last Name" required autofocus="">
+			</div>
+		</div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="address" class="sr-only">Address</label>
+                <input id="address" name="address" class="form-control" placeholder="Address" autofocus="">
+			</div>
+			<div class="col-md-6">
+                <label for="phone" class="sr-only">Phone Number</label>
+                <input type="text" pattern="[0-9]{10}" name="phone" id="phone" class="form-control" placeholder="Phone Number" autofocus>
+			</div>
+		</div>
+		<div class="row">
+            <div class="col-md-6">
+                <label for="hospital" class="sr-only">Preferred Hospital</label>
+                {{ form.pref_hospital }}
+			</div>
+			<div class="col-md-6">
+                <label for="insurance" class="sr-only">Insurance ID</label>
+                <input type="text" pattern="[0-9]{0,10}" name="insurance" id="insurance" class="form-control" placeholder="Insurance ID" autofocus>
+			</div>
+		</div>
+		<h5>Emergency Contact</h5>
+		<div class="row">
+            <div class="col-md-6">
+                <label for="ice_name" class="sr-only">First Name</label>
+                <input id="ice_name" name="ice_name" class="form-control" placeholder="Full Name" autofocus="">
+			</div>
+			<div class="col-md-6">
+                <label for="ice_phone" class="sr-only">Phone Number</label>
+                <input type="text" pattern="[0-9]{10}" name="ice_phone" id="ice_phone" class="form-control" placeholder="Phone Number" autofocus>
+			</div>
+		</div>
+		&nbsp;
+        <div class="row">
+            <div class="col-md-6">
+                <label for="password1" class="sr-only">Password</label>
+                <input type="password" name="password1" id="password1" class="form-control" placeholder="Password" required=""> 
+			</div>
+			<div class="col-md-6">
+                <label for="password2" class="sr-only">Repeat Password</label>
+                <input type="password" name="password2" id="password2" class="form-control" placeholder="Repeat Password" required="">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h5>Medical Information</h5>
+                <div class="row">
+                    <div class="col-md-6" style="display: -webkit-box;">
+                        <p style="margin-top: .5em; margin-right: 10px">Gender</p>
+                        {{form.sex}}
+                    </div>
+                </div>
+                &nbsp;
+                <div class="row">
+                    <div class="col-md-6">
+                        <div style="display: flex;">
+                            <p style="margin-top: .5em;">Height </p>
+                            &nbsp;
+                            <input type="number" name="height_ft" class="form-control" placeholder="ft" min="0" autofocus="" style="width: 50px;">'
+                            &nbsp;
+                            <input type="number" name="height_in" class="form-control" placeholder="in" min="0" max="12" autofocus="" style="width: 50px;">"
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div style="display: flex;">
+                            <input type="number" name="weight" class="form-control" placeholder="Weight" min="0" autofocus="" style="width: 90px;">
+                            &nbsp;
+                            <p style="margin-top: .5em;">lbs</p>
+                        </div>
+                    </div>
+                </div>
+                &nbsp;
+				<label for="med_info" class="sr-only">Other Information</label>
+				<input type="text" name="med_info" class="form-control" placeholder="Other Information" size="60" autofocus="">
+			</div>
+		</div>
+        <button class="btn btn-lg btn-danger btn-block" type="submit" style="margin-top:20px;">Register</button>
+      </form>
+    </div>
+{% endblock %}

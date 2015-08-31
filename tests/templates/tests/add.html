@@ -1,0 +1,69 @@
+{% extends "dashboard/dashboard.html" %}
+{% block page %}
+<div class="row page-header">
+    <div class="col-md-3">
+        <h1 style="margin-top: 0px;">New Test Result</h1>
+    </div>
+</div>
+{% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ error }}
+            </div>
+    {% endfor %}
+{% endif %}
+{% for field in form %}
+        {% if field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ field.label_tag }}</strong> {{ field.errors }}
+            </div>
+        {% endif %}
+{% endfor %}
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+<div class="row">
+	<div class="col-md-2">
+		<h5>Doctor:</h5>
+		<select class="selectpicker form-control" disabled>
+			<option>{{doctor}}</option>
+		</select>
+	</div>
+	<div class="col-md-2">
+		<h5>Patient:</h5>
+		<select class="selectpicker form-control" disabled>
+			<option>{{patient}}</option>
+		</select>
+	</div>
+</div>
+&nbsp;
+<div class="row">
+	<div class="col-md-3">
+		<label for="name" class="sr-only">Name</label>
+        <input id="name" name="name" class="form-control" value="{{test.name}}" placeholder="Name" autfocus/>
+	</div>
+</div>
+&nbsp;
+<div class="row">
+	<div class="col-md-3">
+		{{form.docfile}}
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-5">
+		<h5>Notes:</h5>
+		<label for="notes" class="sr-only">Notes</label>
+        <textarea id="notes" name="notes" class="form-control" placeholder="Notes" autofocus="" style="height: 10em;">{{test.notes}}</textarea>
+	</div>
+</div>
+<div class="col-md-6" style="margin-top:20px;">
+    <div class="btn-group btn-group-lg" role="group" style= "float: right;">
+        <button class="btn btn-danger" type="submit">Save</button>
+    	<button onclick="goBack()" class="btn btn-danger">Cancel</button>
+    </div>
+</div>
+</form>
+<script>
+function goBack() {
+    window.history.back()
+}
+</script>
+{% endblock %}

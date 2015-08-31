@@ -1,0 +1,36 @@
+{% extends "accounts/base.html" %}
+{% load staticfiles %}
+{% block title %}
+ <title>Login|HealthNet</title>
+{% endblock %}
+{% block content %}
+<div class="container">
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ field.label_tag }}</strong> {{ error }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+    {% endfor %}
+    <form class="form-signin" action="" method="post">{% csrf_token %}
+		{% if next %}
+			<input type="hidden" name="next" value="{{ next }}" />
+		{% endif %}
+        <img class="form-signin-heading" style="height: 77px; margin-bottom: -20px; margin-left: -270px;" src="{% static '/static/healthnet.png' %}">
+        <h4 class="form-signin-heading" style="color: #b80101; margin-left: -80px; margin-bottom: -65px;">Login</h4>
+        <label for="username" class="sr-only">Username</label>
+        <input type="text" pattern="[A-Za-z@.+-_]{0,30}" name="username" id="username" class="form-control" placeholder="Username" required autofocus>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+        <button class="btn btn-lg btn-danger btn-block" type="submit">Sign in</button>
+		&nbsp;
+		<h5><b>Don't have an account?</b></h5>
+		<a href="/register/" class="btn btn-lg btn-danger btn-block">Register</a>
+      </form>
+</div>
+{% endblock %}
