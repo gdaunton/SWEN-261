@@ -1,6 +1,7 @@
 ![HealthNet](https://health.rhosoft.co/static/healthnet.png)
 HealthNet is a Django and python based web application with sqlite for data storage. The objective of this project was to create an easy to use system that met all of the requirements that we were given. At the beginning of the semester we were broken into groups of five and assigned this project to develop over the course of the class. In our team of 4 we managed the project as if it were being delivered to a customer. This included creating design documents, GUI mock-ups, class diagrams and other related documentation to make sure we planned every aspect of the project. My role was to focus on the development of the application. After development we tested and shipped the app. Our Professor noted that we had the best implementation in the class.
 
+[Checkout our demo version](http://health.rhosoft.co/) (logins are the same as below)
 ##Installation
 Download and install [Python 3.4](https://www.python.org/downloads/) which should have pip packaged with it.
 If not install [pip](https://pip.pypa.io/en/latest/installing.html).
